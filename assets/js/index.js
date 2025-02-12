@@ -3,29 +3,23 @@ function getComputerChoice() {
     return compChoice;
 }
 function getHumanChoice() {
-    let humanChoice = parseInt(
-        prompt(
-            "Please enter your choice: 1 is Rock, 2 is Paper and 3 is Scissors.",
-            "1"
-        )
-    );
-    let notNumber = true;
-    while (notNumber) {
-        if (
-            Number.isInteger(humanChoice) &&
-            humanChoice <= 3 &&
-            humanChoice > 0
-        ) {
-            return humanChoice;
-            notNumber = false;
-        } else {
-            humanChoice = parseInt(
-                prompt(
-                    "Please re-enter your choice: 1 is Rock, 2 is Paper and 3 is Scissors.",
-                    "1"
-                ));
+    let humanChoice = prompt(
+        "Please enter your choice: Rock, Paper or Scissors",
+        "Rock"
+    ).toLowerCase();
+    let validation = true;
+    while (validation) {
+        switch (humanChoice) {
+            case 'rock':
+            case 'paper':
+            case 'scissors':
+                validation = false;
+                break;
+            default:
+                humanChoice = prompt('Please re-enter your choice: Rock, Paper or Scissors','Rock').toLowerCase();
         }
-        
     }
+    return humanChoice;
 }
 
+console.log(getHumanChoice());
