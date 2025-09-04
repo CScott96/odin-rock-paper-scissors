@@ -42,30 +42,30 @@ let computerScore = 0;
 function playRound(choice) {
   const computerChoice = getComputerChoice();
   const humanChoice = choice;
-  console.log(
-    "Human chose: " + humanChoice + " Computer chose: " + computerChoice,
-  );
+  let resultText =
+    "Human chose: " + humanChoice + " Computer chose: " + computerChoice;
+  updateGameLog(resultText);
   if (humanChoice === computerChoice) {
-    console.log("draw, play again!");
+    resultText = "draw, play again!";
   } else if (humanChoice == "rock" && computerChoice == "scissors") {
-    console.log("Human wins! Rock beats Scissors");
+    resultText = "Human wins! Rock beats Scissors";
     humanScore++;
   } else if (humanChoice == "paper" && computerChoice == "rock") {
-    console.log("Human wins! Paper beats Rock");
+    resultText = "Human wins! Paper beats Rock";
     humanScore++;
   } else if (humanChoice == "scissors" && computerChoice == "paper") {
-    console.log("Human wins! Scissors beats Paper");
+    resultText = "Human wins! Scissors beats Paper";
     humanScore++;
   } else {
-    console.log(
+    resultText =
       "Computer wins! " +
-        computerChoice +
-        " beats " +
-        humanChoice +
-        ". Try again.",
-    );
+      computerChoice +
+      " beats " +
+      humanChoice +
+      ". Try again.";
     computerScore++;
   }
+  updateGameLog(resultText);
 }
 
 function playGame() {
@@ -80,6 +80,13 @@ function playGame() {
       "Computer wins with this score: " + computerScore + " : " + humanScore,
     );
   }
+}
+
+function updateGameLog(result) {
+  const logCont = document.querySelector("#GameLog");
+  const resultText = document.createTextNode(`
+    ${result}`);
+  logCont.appendChild(resultText);
 }
 
 function setButtons() {
