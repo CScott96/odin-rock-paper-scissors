@@ -39,9 +39,13 @@ function getHumanChoice() {
 let humanScore = 0;
 let computerScore = 0;
 let gameOver = false;
+let round = 0;
 
 function playRound(choice) {
-  if (gameOver == true) {
+  round++;
+  if (round >= 5) {
+    checkWinner();
+  } else if (gameOver == true) {
     return;
   }
   const computerChoice = getComputerChoice();
