@@ -38,8 +38,12 @@ function getHumanChoice() {
 
 let humanScore = 0;
 let computerScore = 0;
+let gameOver = false;
 
 function playRound(choice) {
+  if (gameOver == true) {
+    return;
+  }
   const computerChoice = getComputerChoice();
   const humanChoice = choice;
   let resultText =
@@ -66,36 +70,52 @@ function playRound(choice) {
     computerScore++;
   }
   updateGameLog(resultText);
+  updateGameScore(humanScore, computerScore);
 }
 
-function playGame() {
+function checkWinner() {
+  gameOver = true;
+  const winnerHeading = document.querySelector("#FinalDecision");
   if (humanScore > computerScore) {
-    console.log(
-      "Human wins with this score: " + humanScore + " : " + computerScore,
-    );
+    winnerHeading.innerText =
+      "Human wins with this score: " + humanScore + " : " + computerScore;
   } else if (humanScore == computerScore) {
-    console.log("Draw with this score: " + humanScore + " : " + computerScore);
+    winnerHeading.innerText =
+      "Draw with this score: " + humanScore + " : " + computerScore;
   } else {
-    console.log(
-      "Computer wins with this score: " + computerScore + " : " + humanScore,
-    );
+    winnerHeading.innerText =
+      "Computer wins with this score: " + computerScore + " : " + humanScore;
   }
 }
 
 function updateGameLog(result) {
   const logCont = document.querySelector("#GameLog");
-  const resultText = document.createTextNode(`
-    ${result}`);
+  const resultText = document.createElement("li");
+  resultText.innerText = `${result}`;
   logCont.appendChild(resultText);
 }
 
-function setButtons() {
+function updateGameScore(humanScore, compScore) {
+  const humanScoreBoard = document.querySelector("#HumanScore");
+  const compScoreBoard = document.querySelector("#CompScore");
+
+  humanScoreBoard.innerText = humanScore;
+  compScoreBoard.innerText = compScore;
+}
+
+function initialise() {
   const playButtons = document.querySelectorAll(".ctrl-btn");
   playButtons.forEach((button) => {
     button.addEventListener("click", () => {
       playRound(button.id);
     });
   });
+  const scoreBoard = document.querySelector("#ScoreBoard");
+  const score = document.createElement("p");
+  score.id = "Score";
+  score.innerHTML =
+    "Human: <span id='HumanScore'>0</span> : Computer: <span id='CompScore'>0</span>";
+  scoreBoard.appendChild(score);
 }
 
-setButtons();
+initialise();
